@@ -179,68 +179,60 @@
   /* ---------- Hero ---------- */
   .hero{
     min-height:100svh;
-    padding:clamp(1.4rem,4vw,3.5rem) 1.5rem clamp(3rem,8vw,6rem);
+    padding:clamp(1.2rem,3vw,2.2rem) 1.5rem clamp(3rem,8vw,5rem);
     text-align:center;
     position:relative;
     display:flex;
+    flex-direction:column;
     align-items:center;
     justify-content:center;
     overflow:hidden;
-    color:#fff;
+    color:var(--green);
+    background:var(--paper);
   }
-  .hero-video{
-    position:absolute;
-    inset:0;
-    z-index:0;
-    overflow:hidden;
-    background:var(--green-deep);
+  .hero-image{
+    width:min(940px,100%);
+    margin-inline:auto;
+    position:relative;
+    z-index:1;
   }
-  .hero-video video{
-    position:absolute;
-    inset:0;
+  .hero-image img{
+    display:block;
     width:100%;
-    height:100%;
-    object-fit:cover;
+    max-height:clamp(390px,62svh,760px);
+    height:auto;
+    object-fit:contain;
     object-position:center;
-    pointer-events:none;
-  }
-  .hero-video::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:
-      linear-gradient(180deg,rgba(0,0,0,.28),rgba(0,0,0,.22) 42%,rgba(0,0,0,.44)),
-      radial-gradient(80% 80% at 50% 44%,rgba(0,0,0,.04),rgba(0,0,0,.42));
   }
   .hero-content{
     width:min(760px,100%);
     position:relative;
     z-index:1;
     margin-inline:auto;
-    text-shadow:0 2px 18px rgba(0,0,0,.34);
+    margin-top:clamp(.5rem,2vw,1rem);
   }
   .hero .monograma{
-    filter:brightness(0) invert(1) drop-shadow(0 2px 14px rgba(0,0,0,.34));
+    filter:none;
   }
-  .hero-monogram{font-size:clamp(2.6rem,7vw,3.6rem);margin-bottom:clamp(1.4rem,4vw,2.2rem);}
+  .hero-monogram{display:none;}
   .hero-names{
     font-size:clamp(3rem,10vw,6.4rem);
     line-height:1.16;
     margin-top:0;
-    margin-bottom:clamp(1.8rem,4vw,2.8rem);
+    margin-bottom:clamp(1.1rem,3vw,1.8rem);
     padding-bottom:.18em;
-    color:#fff;
+    color:var(--green);
   }
-  .hero-names .amp{font-size:.6em;display:inline-block;vertical-align:middle;margin-inline:.08em;color:rgba(255,255,255,.82);}
+  .hero-names .amp{font-size:.6em;display:inline-block;vertical-align:middle;margin-inline:.08em;color:var(--green-soft);}
   .hero-date{
     font-size:clamp(1rem,2.4vw,1.25rem);
     letter-spacing:.42em;
     text-transform:uppercase;
-    color:#fff;
+    color:var(--green);
     padding-left:.42em;
   }
   .hero-place{
-    margin-top:clamp(1.5rem,3.4vw,2.2rem);font-size:.86rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.86);
+    margin-top:clamp(1rem,2.6vw,1.6rem);font-size:.86rem;letter-spacing:.28em;text-transform:uppercase;color:var(--green);
   }
 
   /* ---------- Countdown ---------- */
@@ -251,13 +243,13 @@
   .cd-unit{display:flex;flex-direction:column;align-items:center;gap:.4rem;min-width:54px;}
   .cd-num{
     font-size:clamp(1.9rem,6vw,2.9rem);
-    color:#fff;
+    color:var(--green);
     line-height:1;
     font-variant-numeric:tabular-nums;
     font-weight:100;
   }
   .cd-label{
-    font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.78);
+    font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--green-soft);
   }
   .cd-sep{display:none;}
 
@@ -469,6 +461,15 @@
     html{scroll-behavior:auto;}
   }
 
+  @media(min-width:900px){
+    .hero-image{
+      width:100vw;
+    }
+    .hero-image img{
+      max-height:clamp(600px,78svh,980px);
+    }
+  }
+
   @media(max-width:560px){
     .hero-names{font-size:clamp(3rem,16vw,4.5rem);}
     .countdown{gap:.7rem;}
@@ -489,10 +490,8 @@
 
   <!-- ============ HERO ============ -->
   <header class="hero" data-screen-label="Hero">
-    <div class="hero-video" aria-hidden="true">
-      <video id="heroMp4" autoplay muted defaultMuted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture>
-        <source src="assets/hero-mobile.mp4" type="video/mp4">
-      </video>
+    <div class="hero-image">
+      <img src="assets/hero-illustration.png" alt="Ilustração em aquarela de um casal caminhando em Tiradentes">
     </div>
     <div class="hero-content">
       <div class="monogram hero-monogram reveal" aria-label="Monograma B e L">
@@ -750,12 +749,9 @@
 </aside>
 
 <script>
-  /* ---------- Hero MP4 autoplay ---------- */
+  /* ---------- Initial loader ---------- */
   (function(){
-    var video = document.getElementById('heroMp4');
-    if(!video) return;
     var loader = document.getElementById('siteLoader');
-    var retryTimer;
     var loaderHidden = false;
 
     function hideLoader(){
@@ -770,59 +766,8 @@
       }
     }
 
-    function playHeroVideo(){
-      video.muted = true;
-      video.defaultMuted = true;
-      video.autoplay = true;
-      video.playsInline = true;
-      video.setAttribute('muted', '');
-      video.setAttribute('autoplay', '');
-      video.setAttribute('playsinline', '');
-      video.setAttribute('webkit-playsinline', '');
-      var play = video.play();
-      if(play && typeof play.catch === 'function'){
-        play.catch(function(){});
-      }
-      if(!video.paused && video.readyState >= 3){
-        hideLoader();
-      }
-    }
-
-    function startRetrying(){
-      playHeroVideo();
-      clearInterval(retryTimer);
-      retryTimer = setInterval(function(){
-        if(video.paused || video.readyState < 3){
-          playHeroVideo();
-        }else{
-          hideLoader();
-          clearInterval(retryTimer);
-        }
-      }, 450);
-      setTimeout(function(){
-        clearInterval(retryTimer);
-      }, 8000);
-    }
-
-    video.addEventListener('loadedmetadata', startRetrying);
-    video.addEventListener('loadeddata', startRetrying);
-    video.addEventListener('canplay', startRetrying);
-    video.addEventListener('playing', hideLoader);
-    video.addEventListener('canplaythrough', hideLoader);
-    video.addEventListener('pause', function(){
-      if(document.visibilityState !== 'hidden') playHeroVideo();
-    });
-    playHeroVideo();
-    startRetrying();
-    document.addEventListener('DOMContentLoaded', playHeroVideo);
-    window.addEventListener('load', startRetrying);
-    document.addEventListener('visibilitychange', function(){
-      if(!document.hidden) startRetrying();
-    });
-    ['touchstart','pointerdown','scroll'].forEach(function(eventName){
-      window.addEventListener(eventName, startRetrying, {once:true, passive:true});
-    });
-    setTimeout(hideLoader, 6500);
+    window.addEventListener('load', hideLoader);
+    setTimeout(hideLoader, 2200);
   })();
 
   /* ---------- Countdown to 24 Oct 2026 ---------- */
