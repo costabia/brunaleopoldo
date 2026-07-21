@@ -179,22 +179,26 @@
   /* ---------- Hero ---------- */
   .hero{
     min-height:100svh;
-    padding:clamp(1.2rem,3vw,2.2rem) 1.5rem clamp(3rem,8vw,5rem);
+    padding:clamp(1rem,2.4vw,1.65rem) 1.5rem clamp(1.6rem,4vw,2.8rem);
     text-align:center;
     position:relative;
     display:flex;
     flex-direction:column;
     align-items:center;
-    justify-content:center;
+    justify-content:flex-start;
     overflow:hidden;
     color:var(--green);
     background:var(--paper);
   }
   .hero-image{
-    width:min(940px,100%);
+    width:min(1120px,100%);
     margin-inline:auto;
     position:relative;
     z-index:1;
+    margin-top:clamp(.65rem,1.6vw,1.05rem);
+  }
+  .hero-image picture{
+    display:block;
   }
   .hero-image img{
     display:block;
@@ -207,38 +211,50 @@
   .hero-content{
     width:min(760px,100%);
     position:relative;
-    z-index:1;
+    z-index:2;
     margin-inline:auto;
-    margin-top:clamp(.5rem,2vw,1rem);
+    margin-top:clamp(.45rem,1.6vw,1rem);
   }
   .hero .monograma{
     filter:none;
   }
-  .hero-monogram{display:none;}
+  .hero-monogram{
+    display:block;
+    width:clamp(54px,6vw,78px);
+    margin-inline:auto;
+    color:var(--green);
+  }
+  .hero-monogram .monograma{
+    display:block;
+    width:100%;
+    filter:brightness(0) saturate(100%) invert(43%) sepia(12%) saturate(755%) hue-rotate(27deg) brightness(94%) contrast(84%);
+  }
   .hero-names{
-    font-size:clamp(3rem,10vw,6.4rem);
-    line-height:1.16;
-    margin-top:0;
-    margin-bottom:clamp(1.1rem,3vw,1.8rem);
+    font-size:clamp(2.85rem,8.6vw,5.7rem);
+    line-height:1.12;
+    margin-top:clamp(1.25rem,3vw,2rem);
+    margin-bottom:clamp(1rem,2.4vw,1.55rem);
     padding-bottom:.18em;
     color:var(--green);
   }
   .hero-names .amp{font-size:.6em;display:inline-block;vertical-align:middle;margin-inline:.08em;color:var(--green-soft);}
   .hero-date{
-    font-size:clamp(.92rem,2.1vw,1.12rem);
+    font-size:clamp(.82rem,1.65vw,1rem);
     letter-spacing:.42em;
     text-transform:uppercase;
     color:var(--green);
     padding-left:.42em;
   }
   .hero-place{
-    margin-top:clamp(1rem,2.6vw,1.6rem);font-size:.78rem;letter-spacing:.25em;text-transform:uppercase;color:var(--green);
+    margin-top:clamp(.65rem,1.5vw,.95rem);font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;color:var(--green);
   }
 
   /* ---------- Countdown ---------- */
+  .countdown-section{
+    padding:clamp(2.8rem,7vw,5rem) 1.5rem clamp(3rem,8vw,5.5rem);
+  }
   .countdown{
     display:flex;justify-content:center;gap:clamp(1.1rem,4vw,2.6rem);
-    margin-top:clamp(2.4rem,6vw,3.4rem);
   }
   .cd-unit{display:flex;flex-direction:column;align-items:center;gap:.4rem;min-width:54px;}
   .cd-num{
@@ -459,18 +475,52 @@
   }
 
   @media(min-width:900px){
+    .hero-content{
+      margin-top:clamp(2.1rem,7svh,4.6rem);
+    }
+    .hero-monogram{
+      width:68px;
+    }
     .hero-image{
       width:100vw;
+      margin-top:clamp(-4.2rem,-6svh,-2.4rem);
     }
     .hero-image img{
-      max-height:clamp(600px,78svh,980px);
+      max-height:clamp(430px,300svh,900px);
     }
   }
 
   @media(max-width:560px){
-    .hero-names{font-size:clamp(2.65rem,14vw,4rem);}
+    .hero{
+      min-height:auto;
+      overflow:visible;
+      padding-top:clamp(2.4rem,8svh,4rem);
+      padding-bottom:clamp(3rem,9svh,5rem);
+    }
+    .hero-content{
+      margin-top:0;
+      width:100%;
+    }
+    .hero-monogram{
+      width:clamp(52px,15vw,68px);
+    }
+    .hero-names{
+      font-size:clamp(2.45rem,12.5vw,3.55rem);
+      margin-top:clamp(1.9rem,7svh,3.25rem);
+      margin-bottom:clamp(1.05rem,3.6svh,1.8rem);
+    }
     .hero-date{font-size:.82rem;letter-spacing:.32em;padding-left:.32em;}
     .hero-place{font-size:.72rem;letter-spacing:.2em;}
+    .hero-image{
+      margin-top:clamp(3.2rem,10svh,5.8rem);
+      width:min(430px,100%);
+    }
+    .hero-image img{
+      max-height:clamp(250px,42svh,420px);
+    }
+    .countdown-section{
+      padding-top:clamp(4.5rem,14svh,7rem);
+    }
     .countdown{gap:.7rem;}
     .cd-unit{min-width:46px;}
     .btn{width:100%;}
@@ -489,9 +539,6 @@
 
   <!-- ============ HERO ============ -->
   <header class="hero" data-screen-label="Hero">
-    <div class="hero-image">
-      <img src="assets/hero-illustration.jpeg" alt="Ilustração em aquarela de um casal caminhando em Tiradentes">
-    </div>
     <div class="hero-content">
       <div class="monogram hero-monogram reveal" aria-label="Monograma B e L">
         <img src="assets/monograma.svg" alt="" class="monograma">
@@ -500,15 +547,24 @@
       <p class="hero-date reveal d2">24 DE OUTUBRO DE 2026</p>
       <p class="hero-date reveal d2">às 15h</p>
       <p class="hero-place reveal d2">Tiradentes — Minas Gerais</p>
-
-      <div class="countdown reveal d3" id="countdown" aria-label="Contagem regressiva">
-        <div class="cd-unit"><span class="cd-num" id="cd-days">--</span><span class="cd-label">Dias</span></div>
-        <div class="cd-unit"><span class="cd-num" id="cd-hours">--</span><span class="cd-label">Horas</span></div>
-        <div class="cd-unit"><span class="cd-num" id="cd-mins">--</span><span class="cd-label">Minutos</span></div>
-        <div class="cd-unit"><span class="cd-num" id="cd-secs">--</span><span class="cd-label">Segundos</span></div>
-      </div>
+    </div>
+    <div class="hero-image">
+      <picture>
+        <source srcset="assets/hero-desktop.png" media="(min-width: 700px)">
+        <img src="assets/hero-illustration.jpeg" alt="Ilustração em aquarela de um casal caminhando em Tiradentes">
+      </picture>
     </div>
   </header>
+
+  <!-- ============ COUNTDOWN ============ -->
+  <section class="countdown-section" data-screen-label="Contagem regressiva">
+    <div class="countdown reveal d3" id="countdown" aria-label="Contagem regressiva">
+      <div class="cd-unit"><span class="cd-num" id="cd-days">--</span><span class="cd-label">Dias</span></div>
+      <div class="cd-unit"><span class="cd-num" id="cd-hours">--</span><span class="cd-label">Horas</span></div>
+      <div class="cd-unit"><span class="cd-num" id="cd-mins">--</span><span class="cd-label">Minutos</span></div>
+      <div class="cd-unit"><span class="cd-num" id="cd-secs">--</span><span class="cd-label">Segundos</span></div>
+    </div>
+  </section>
 
   <!-- ============ BOAS-VINDAS ============ -->
   <section class="welcome" data-screen-label="Boas-vindas">
