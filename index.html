@@ -504,12 +504,14 @@
     .hero{
       min-height:auto;
       overflow:hidden;
+      padding-inline:0;
       padding-top:clamp(2.4rem,8svh,4rem);
       padding-bottom:clamp(3rem,9svh,5rem);
     }
     .hero-content{
       margin-top:0;
       width:100%;
+      padding-inline:1.5rem;
     }
     .hero-monogram{
       width:clamp(52px,15vw,68px);
@@ -524,13 +526,14 @@
     .hero-image{
       margin-top:clamp(3.2rem,10svh,5.8rem);
       width:100%;
-      max-width:430px;
+      max-width:100%;
       overflow:hidden;
     }
     .hero-image img{
-      width:115%;
-      max-height:clamp(340px,56svh,540px);
-      margin-left:-7.5%;
+      width:135%;
+      max-width:none;
+      max-height:clamp(390px,62svh,620px);
+      margin-left:-17.5%;
     }
     .countdown-section{
       padding-top:clamp(4.5rem,14svh,7rem);
